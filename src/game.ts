@@ -1,13 +1,16 @@
 import { Collision } from "matter";
 import * as Phaser from "phaser";
 import { createAnimes } from "./player";
-var ani_status = 'mr_idle_down'
+import { controls } from "./controls";
+
+
 
 export default class Demo extends Phaser.Scene {
   // player;
   // controls;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private mr_al!: Phaser.Physics.Arcade.Sprite;
+  ani_status = "";
   constructor() {
     super("demo");
   }
@@ -44,35 +47,7 @@ export default class Demo extends Phaser.Scene {
   }
 
   update(t: number, dt: number) {
-    if(!this.cursors || !this.mr_al){
-      return
-    }
-    const speed = 100;
-    if (this.cursors.left?.isDown){
-      ani_status = 'mr_idle_sides'
-      this.mr_al.anims.play('mr_run_sides',true);
-      this.mr_al.setVelocity(-speed,0);
-      this.mr_al.scale = 1;
-      
-    }else if (this.cursors.right?.isDown){
-      ani_status = 'mr_idle_sides'
-      this.mr_al.anims.play('mr_run_sides',true);
-      this.mr_al.setVelocity(speed,0);
-      this.mr_al.scaleX = -1;
-    }else if (this.cursors.up?.isDown){
-      ani_status = 'mr_idle_up'
-      this.mr_al.anims.play('mr_run_up',true);
-      this.mr_al.setVelocity(0,-speed);
-
-    }else if (this.cursors.down?.isDown){
-      ani_status = 'mr_idle_down'
-      this.mr_al.anims.play('mr_run_down',true);
-      this.mr_al.setVelocity(0,speed);
-    }else{
-      this.mr_al.play(ani_status);
-      this.mr_al.setVelocity(0,0);
-    }
-
+    controls(this.cursors,this.mr_al,this.ani_status);
   }
 }
 
