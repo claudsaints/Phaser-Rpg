@@ -21,17 +21,11 @@ export default class Demo extends Phaser.Scene {
     this.load.atlas('mr_alfred','./assets/char/mr_alfred.png','./assets/char/mr_alfred2.json');
     this.cursors = this.input.keyboard.createCursorKeys();
     //mapa arquivos que contem, carregando primeiro....
-    // this.load.image('tiles','./assets/map/grass.png');
-    // this.load.image('tiles2','./assets/map/a.png');
-    // this.load.tilemapTiledJSON('map','./assets/map/mapa.json');
-    // loadSprites(this);
   }
 
   create() {
     // const map = this.make.tilemap({key: "map", tileWidth: 32, tileHeight: 32 });
     const map = this.make.tilemap({key : "map", tileWidth: 32, tileHeight: 32});
-    // const tilesetGrass = map.addTilesetImage("WORLD","tiles");
-    // const tilesetWater = map.addTilesetImage("new","tiles2");
     //construção do mapa
     const tilesetDun = map.addTilesetImage("cum","tiles");
     const gnd = map.createLayer('lum',tilesetDun,0,0);
@@ -39,10 +33,16 @@ export default class Demo extends Phaser.Scene {
     const dd = map.createLayer('ltres',tilesetDun,0,0);
     const dd2 = map.createLayer('lquatro',tilesetDun,0,0);
     gnd.setCollisionByProperty({collides: true});
+    dd2.setCollisionByProperty({collides: true});
+    // dd2.setSize(dd2.width = 20, dd2.height = 20)
     // definiçôes de personagem
     this.mr_al = this.physics.add.sprite(128,128,'mr_alfred');
+    //box 
+    this.mr_al.body.setSize(this.mr_al.width = 20 , this.mr_al.height = 24)
+    this.mr_al.setOffset(5 , 3)
     createAnimes(this.anims);
-    this.physics.add.collider(this.mr_al,gnd);
+    //colisão
+    this.physics.add.collider(this.mr_al,[gnd,dd2]);
     this.cameras.main.startFollow(this.mr_al, true);
   }
 
@@ -61,7 +61,8 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0 },
+      debug: true,
+      gravity: { y: 0 }
     },
   },
   scale: {

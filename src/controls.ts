@@ -8,13 +8,13 @@ export const controls = (cursors,mr_al,ani_status) => {
         ani_status = 'mr_idle_sides'
         mr_al.anims.play('mr_run_sides',true);
         mr_al.setVelocity(-speed,0);
-        mr_al.scale = 1;
+        mr_al.flipX= false;
     
     }else if (cursors.right?.isDown){
         ani_status = 'mr_idle_sides'
         mr_al.anims.play('mr_run_sides',true);
         mr_al.setVelocity(speed,0);
-        mr_al.scaleX = -1;
+        mr_al.flipX = true;
     }else if (cursors.up?.isDown){
         ani_status = 'mr_idle_up'
         mr_al.anims.play('mr_run_up',true);
